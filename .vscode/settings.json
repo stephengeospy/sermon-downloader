@@ -1,0 +1,9 @@
+{
+    "python.testing.pytestArgs": [
+        "preach-hub"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/3.6/bin/python3.6"
+}
