@@ -3,18 +3,14 @@ import requests
 import urllib
 import datetime
 import sys
+import os
 
 
 def get_video_links():
     r = requests.get(archive_url)
-
-    # create beautiful-soup object
     soup = BeautifulSoup(r.content, 'html5lib')
-    
-    # find all links on web-page and filter links with .mp4
     links = soup.findAll('a')
-    video_links = [archive_url + link['href'] for link in links if link['href'].endswith('mp4')] 
-
+    video_links = [archive_url + link['href'] for link in links if link['href'].endswith('mp4')]
     return video_links 
 
 
@@ -25,38 +21,31 @@ def compare_with_master(video_links):
         return [link for link in video_links if link not in master_links]
 
 
-def write_new_to_master(new_links):
+def write_new_to_master(new_link):
     with open(f"resources/{master_file}", "a") as f:
-        for link in new_links:
-            print(link, file=f)
+        print(new_link, file=f)
 
 
 def download_video_series(video_links):
     print(f'Start time: {datetime.datetime.now()}')
 
     for link in video_links:
-        # obtain filename by splitting url and getting last string
         file_name_raw = link.split('/')[-1]
         file_name = urllib.parse.unquote(file_name_raw, encoding='utf-8', errors='replace')
 
         print(f'Downloading file: {file_name}')
-
         try:
             r = requests.get(link, stream=True)
-
-            # Download File in chunks
             with open(f'resources/{file_name}', 'wb') as f:
                 for chunk in r.iter_content(chunk_size=1024*1024):
                     if chunk:
                         f.write(chunk)
 
             print(f'End time: {datetime.datetime.now()}')
-
-            # Write the link to the master file
-            write_new_to_master(list(link))
-
+            write_new_to_master(link)
         except Exception as e:
             print(f"Failed to download - {file_name}")
+            print(e)
             sys.exit(1)
 
     print(f'All videos downloaded!')
