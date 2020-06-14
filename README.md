@@ -1,10 +1,10 @@
 # Sermon Downloader
 Sermon Downloader is a web scrapping project to download the videos from two websites:  
-1. [PreachHub](https://www.preachub.com/search.php?keywords=joseph+prince). 
+1. [PreachHub](https://www.preachub.com/search.php?keywords=joseph+prince) 
 2. [SermonLove](https://cdn.sermons.love/mp4/Joseph%20Prince/)
 
 ## Packages required 
-The main packages required and have to installed are:
+The main packages required and have to be installed:
 1. `requests` for performing our HTTP requests.  
 2. `BeautifulSoup4` for handling all of our HTML processing.
 
